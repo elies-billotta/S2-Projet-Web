@@ -8,12 +8,12 @@ with open('film.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO test (title, content) VALUES (?, ?)",
-            ('First Post', 'Content for the first post')
+cur.execute("INSERT INTO DIFFICULTE (nom) VALUES (?)",
+            ("Simple",)
             )
 
-cur.execute("INSERT INTO test (title, content) VALUES (?, ?)",
-            ('Second Post', 'Content for the second post')
+cur.execute("INSERT INTO JOUEUR (Nom,score) VALUES (?, ?)",
+            ("Nullos","15000")
             )
 
 connection.commit()
