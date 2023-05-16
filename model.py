@@ -40,6 +40,18 @@ def get_leaderboard():
         leaderboard.append(Joueur(row[1], row[2]))
     return leaderboard
 
+def get_leaderboard_by_difficulte(difficulte):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    res = cur.execute('SELECT * FROM joueur WHERE difficulte = ? ORDER BY score DESC LIMIT 10', (difficulte,)).fetchall()
+    leaderboard = []
+    for row in res:
+        print(row[1], row[2])
+        leaderboard.append(Joueur(row[1], row[2]))
+    return leaderboard
+
+
 
 #------------------------------ CLASSES ------------------------------#
 
