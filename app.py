@@ -3,13 +3,18 @@ from model import *
 from flask import Flask , render_template
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-#get a random movie from the database
 @app.route('/')
 def index():
-    test = get_random_film()
-    return render_template('index.html',test=test)
+    #test = get_random_film()
+    return render_template('index.html')#,test=test)
 
 @app.route('/game')
 def game():
     difficulte = get_difficulte()
     return render_template('game.html',levels=difficulte)
+
+@app.route('/round')
+def round():
+    film = get_random_film()
+    leaderboard = get_leaderboard()
+    return render_template('round.html',film=film, leaderboard = leaderboard)
