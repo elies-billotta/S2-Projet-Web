@@ -8,7 +8,7 @@ def index():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
     cur = connection.cursor()
-    test = cur.execute('SELECT * FROM test ORDER BY RANDOM() LIMIT 1')
+    test = cur.execute('SELECT * FROM film ORDER BY RANDOM() LIMIT 1')
     connection.commit()
     return render_template('index.html',test=test)
 
