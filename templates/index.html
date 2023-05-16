@@ -11,13 +11,11 @@
 </head>
 <body>
      {% block content %}
-    <h1>{% block title %} Posts {% endblock %}</h1>
-    {% for post in test %}
+    <h1>{% block title %} FILM {% endblock %}</h1>
         <div class='post'>
-            <h2>{{ post["nom"] }}</h2>
-            <p>{{ post["description"] }}</p>
+            <h2>{{ test["nom"] }}</h2>
+            <p>{{ test["description"] }}</p>
         </div>
-    {% endfor %}
 {% endblock %}
     <header>
     </header>
