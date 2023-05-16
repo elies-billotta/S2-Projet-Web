@@ -5,8 +5,7 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route('/')
 def index():
-    #test = get_random_film()
-    return render_template('index.html')#,test=test)
+    return render_template('index.html')
 
 @app.route('/game')
 def game():

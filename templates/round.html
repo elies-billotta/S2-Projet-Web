@@ -70,8 +70,8 @@
             <tbody>
                 {% for player in leaderboard %}
                 <tr>
-                    <td>{{player["nom"]}}</td>
-                    <td>{{player["score"]}}</td>
+                    <td>{{player.get_nom()}}</td>
+                    <td>{{player.get_score()}}</td>
                     <!-- <td>Facile</td> -->
                 </tr>
                 {% endfor %}
@@ -83,7 +83,7 @@
     <div class="screen">
         <div class="display">
             <!--IMAGE-->
-            <img src="{{film['image']}}" alt="{{film['description']}}">
+            <img src="{{film.get_image()}}" alt="{{film.get_description()}}">
             {% endblock %}
         </div>
         <div class="inputs">

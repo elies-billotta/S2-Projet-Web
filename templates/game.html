@@ -18,8 +18,8 @@
                 {% block content %}
                 <select name="level" id="level" class="level">
                         <!--BOUCLE DES OPTIONS NIVEAUX-->
-                        {% for level in levels %}
-                        <option value="{{ level['nom'] }}">{{ level["nom"] }}</option>
+                        {% for difficulte in levels %}
+                        <option value="{{ difficulte.get_nom() }}">{{ difficulte.get_nom() }}</option>
                         {% endfor %}
                 </select>
                 <button  type="submit" id="go" class="go" >GO</button>

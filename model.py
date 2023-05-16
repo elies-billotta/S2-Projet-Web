@@ -49,16 +49,40 @@ class Film :
         self.image = image
         self.description = description
         self.difficulte = difficulte
+
+    def get_nom(self):
+        return self.nom
+
+    def get_image(self):
+        return self.image
+
+    def get_description(self):
+        return self.description
+
+    def get_difficulte(self):
+        return self.difficulte
     
 class Joueur : 
     def __init__(self, nom, score):
         self.nom = nom
         self.score = score
 
+    def get_nom(self):
+        return self.nom
+
+    def get_score(self):
+        return self.score
+
 class Difficulte : 
     def __init__(self, nom):
         self.nom = nom
 
+    def get_nom(self):
+        return self.nom
+
 class Genre :
     def __init__(self, nom):
         self.nom = nom
+
+    def get_nom(self):  
+        return self.nom
