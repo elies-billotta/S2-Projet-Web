@@ -13,8 +13,9 @@
     <section class="corpus" id="corpus">
         <section class="label">
             <div>
+                <form action = "/round" method = "POST">
                 <!--INITIALISATION DES VARIABLES JS-->
-                <input class="nickname" type="text" id="nickname" value="Joueur1">
+                <input class="nickname" type="text" name="nom" placeholder="Joueur 1">
                 {% block content %}
                 <select name="level" id="level" class="level">
                         <!--BOUCLE DES OPTIONS NIVEAUX-->
@@ -24,6 +25,7 @@
                 </select>
                 <button  type="submit" id="go" class="go" >GO</button>
                 {% endblock %}
+            </form>
             </div>
         </section>
     </section>
