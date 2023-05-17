@@ -5,7 +5,8 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    leaderboard = get_leaderboard(10)
+    return render_template('index.html', leaderboard = leaderboard)
 
 @app.route('/game')
 def game():
@@ -15,5 +16,5 @@ def game():
 @app.route('/round')
 def round():
     film = get_random_film()
-    leaderboard = get_leaderboard()
+    leaderboard = get_leaderboard(10)
     return render_template('round.html',film=film, leaderboard = leaderboard)

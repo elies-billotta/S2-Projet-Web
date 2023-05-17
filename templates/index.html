@@ -25,33 +25,17 @@
                     <tr>
                         <th>Pseudo</th>
                         <th>Score</th>
-                        <th>Niveau</th>
-
+                        <!-- <th>Difficulté</th> -->
                     </tr>
                 </thead> 
                 <tbody>
                     <!--BOUCLE TABLEAU TOP 10 SCORE-->
+                    {% for player in leaderboard %}
                     <tr>
-                        <td>Joueur1</td>
-                        <td>43020</td>
-                        <td>Facile</td>
+                        <td>{{player.get_nom()}}</td>
+                        <td>{{player.get_score()}}</td>
                     </tr>
-                    <tr>
-                        <td>Joueur2</td>
-                        <td>42020</td>
-                        <td>Facile</td>
-                    </tr>
-                    <tr>
-                        <td>Joueur1</td>
-                        <td>43020</td>
-                        <td>Difficile</td>
-                    </tr>
-                    <tr>
-                        <td>Joueur2</td>
-                        <td>42020</td>
-                        <td>Normal</td>
-                    </tr>
-
+                    {% endfor %}
                 </tbody>
             </table>
        

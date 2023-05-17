@@ -29,11 +29,11 @@ def get_difficulte():
         difficulte.append(Difficulte(row[0]))
     return difficulte
 
-def get_leaderboard():
+def get_leaderboard(limite):
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
     cur = connection.cursor()
-    res = cur.execute('SELECT * FROM joueur ORDER BY score DESC LIMIT 10').fetchall()
+    res = cur.execute('SELECT * FROM joueur ORDER BY score DESC LIMIT ?', (limite,)).fetchall()
     leaderboard = []
     for row in res:
         print(row[1], row[2])
