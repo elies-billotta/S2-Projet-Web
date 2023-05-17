@@ -40,6 +40,21 @@ def get_leaderboard(limite):
         leaderboard.append(Joueur(row[1], row[2]))
     return leaderboard
 
+def create_new_joueur(nom):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('INSERT INTO joueur (nom, score) VALUES (?, ?)', (nom, 0))
+    connection.commit()
+
+
+def update_score_joueur(joueur):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('UPDATE joueur SET score = ? WHERE nom = ?', (joueur.score, joueur.id_joueur))
+    connection.commit()
+
 #------------------------------ CLASSES ------------------------------#
 
 class Film : 
@@ -62,7 +77,8 @@ class Film :
         return self.difficulte
     
 class Joueur : 
-    def __init__(self, nom, score):
+    def __init__(self, id_joueur, nom, score):
+        self.id_joueur = id_joueur
         self.nom = nom
         self.score = score
 
