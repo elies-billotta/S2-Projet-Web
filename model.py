@@ -10,13 +10,23 @@ def get_random_film():
     movie = Film(res[2], res[1], res[3], res[4])
     return movie
 
+# def get_random_film_by_difficulte(difficulte):
+#     connection = sqlite3.connect('database.db')
+#     connection.row_factory = sqlite3.Row
+#     cur = connection.cursor()
+#     res = cur.execute('SELECT * FROM film WHERE difficulte = ? ORDER BY RANDOM() LIMIT 1', (difficulte,)).fetchone()
+#     movie = Film(res[2], res[1], res[3], res[4])
+#     return movie
 def get_random_film_by_difficulte(difficulte):
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
     cur = connection.cursor()
     res = cur.execute('SELECT * FROM film WHERE difficulte = ? ORDER BY RANDOM() LIMIT 1', (difficulte,)).fetchone()
-    movie = Film(res[2], res[1], res[3], res[4])
-    return movie
+    if res:
+        movie = Film(res['id_film'], res['Image'], res['Nom'], res['Description'], res['Difficulte'])
+        return movie
+    else:
+        return None
 
 def get_difficulte():
     connection = sqlite3.connect('database.db')
@@ -56,10 +66,29 @@ def update_score_joueur(id, score):
 
 #------------------------------ CLASSES ------------------------------#
 
-class Film : 
-    def __init__(self, nom,  image, description, difficulte):
-        self.nom = nom
+# class Film : 
+#     def __init__(self, nom,  image, description, difficulte):
+#         self.nom = nom
+#         self.image = image
+#         self.description = description
+#         self.difficulte = difficulte
+
+#     def get_nom(self):
+#         return self.nom
+
+#     def get_image(self):
+#         return self.image
+
+#     def get_description(self):
+#         return self.description
+
+#     def get_difficulte(self):
+#         return self.difficulte
+class Film:
+    def __init__(self, id_film, image, nom, description, difficulte):
+        self.id_film = id_film
         self.image = image
+        self.nom = nom
         self.description = description
         self.difficulte = difficulte
 

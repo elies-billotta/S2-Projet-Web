@@ -1,3 +1,5 @@
+
+// Updated upstream:static/script.js
 window.addEventListener("DOMContentLoaded", (event) => {
     
     
@@ -14,13 +16,21 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     const ulHistorique = document.getElementById("ulHistorique");
 
+    const afficheImg = document.getElementById("afficheImg");
+
     const form = document.getElementById("form");
     let tryInput = document.getElementById("try");
-    let reponse = "Dune" // réponse attendue
+    let reponse = "test"; 
     
     let userName; 
     let level; 
-    let timer = 60; 
+    let timer = 600; 
+
+
+    let filmId;
+    let filmImage;
+    let filmNom;
+    let filmDifficulte;
 
 
     //formater chaine
@@ -31,22 +41,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         }
         
 
-   //Bonne réponse ? 
-    reponse = formaterChaine(reponse); 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        let essai = formaterChaine(tryInput.value); 
-        if (essai !== reponse) {
-            const newLi = document.createElement("li");
-            newLi.textContent = tryInput.value;
-            ulHistorique.insertBefore(newLi, ulHistorique.firstChild);
-            tryInput.value = ""; 
-            return;
-        }
-        form.submit(); //CHANGER DE FILM ET AJOUTER DES POINTS 
-        // ne pas submit pour ne pas recharger la page
-      });
- 
+
       
     function chrono(){
         if(timer > 0){
@@ -61,7 +56,68 @@ window.addEventListener("DOMContentLoaded", (event) => {
         
     }
 
+
+function callFilm(){
+    //Formater les maj de level 
+    level = formaterChaine(level);
+    fetch(`/api/getfilm/${level}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+            // Gérer l'erreur 
+            console.error(data.error);
+            } 
+            else {
+            // Film retournées par l'API
+            filmId = data.id_film;
+            filmImage = data.Image;
+            filmNom = data.Nom;
+            filmDifficulte = data.Difficulte;
+            
+            console.log(`Film ID: ${filmId}`);
+            console.log(`Film Image: ${filmImage}`);
+            console.log(`Film Nom: ${filmNom}`);
+            console.log(`Film Difficulte: ${filmDifficulte}`);
+
+            //Intégrer les infos 
+            afficheImg.src = filmImage; 
+            reponse = filmNom; 
+
+    }
+        })
+        .catch(error => {
+            // Gérer les erreurs de la requête
+            console.error("Une erreur s'est produite lors de la récupération du film :", error);
+        });
+}
+
+
     
+
+
+
+
+   //Bonne réponse ? 
+   form.addEventListener('submit', (event) => {
+       event.preventDefault();
+       let essai = formaterChaine(tryInput.value); 
+       reponse = formaterChaine(reponse);
+       console.log('vérif : ')
+       console.log(reponse); 
+       console.log(essai); 
+       if (essai !== reponse) {
+           const newLi = document.createElement("li");
+           newLi.textContent = tryInput.value;
+           ulHistorique.insertBefore(newLi, ulHistorique.firstChild);
+           tryInput.value = ""; 
+           return;
+       }
+       tryInput.value = "";
+       //est-ce qu'on supprime l'historique des mauvaises réponses également ? 
+       callFilm();
+    
+     });
+
 
     //display game & user info
     goBtn.addEventListener("click", function(){
@@ -72,11 +128,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
         displayUsername.innerHTML = userName; 
         displayLevel.innerHTML = level; 
+
+        callFilm();
   
         
         setInterval(chrono, 1000)
         
     });
+
+    
+
 
 
 
