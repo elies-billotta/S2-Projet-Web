@@ -1,17 +1,22 @@
 import sqlite3
-from flask import Flask , render_template
+from model import *
+from flask import Flask , render_template, request
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-#get a random movie from the database
 @app.route('/')
 def index():
-    connection = sqlite3.connect('database.db')
-    connection.row_factory = sqlite3.Row
-    cur = connection.cursor()
-    test = cur.execute('SELECT * FROM film ORDER BY RANDOM() LIMIT 1')
-    connection.commit()
-    return render_template('index.html',test=test)
+    leaderboard = get_leaderboard(10)
+    return render_template('index.html', leaderboard = leaderboard)
 
 @app.route('/game')
 def game():
-    return render_template('game.html')
+    difficulte = get_difficulte()
+    return render_template('game.html',levels=difficulte)
+
+@app.route('/round', methods=['POST'])
+def round():
+    if (request.form["nom"] != ""):
+        create_new_joueur(request.form["nom"])
+    film = get_random_film()
+    leaderboard = get_leaderboard(10)
+    return render_template('round.html',film=film, leaderboard = leaderboard)
