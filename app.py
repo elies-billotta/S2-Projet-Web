@@ -28,3 +28,20 @@ def getFilm(level):
         return jsonify(film_dict)
     else:
         return jsonify({'error': 'No film found for the given difficulty level.'}), 404
+    
+
+
+@app.route('/api/score', methods=['POST'])
+def handle_score():
+    data = request.json
+    nom = data['nom']
+    score = data['score']
+    #si joueur non existant 
+    if (joueur_present(nom)==False):
+        create_new_joueur(nom)
+
+    if (score > get_score_joueur(nom)):
+        update_score_joueur(nom, score)
+
+
+    

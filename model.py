@@ -10,13 +10,7 @@ def get_random_film():
     movie = Film(res[2], res[1], res[3], res[4])
     return movie
 
-# def get_random_film_by_difficulte(difficulte):
-#     connection = sqlite3.connect('database.db')
-#     connection.row_factory = sqlite3.Row
-#     cur = connection.cursor()
-#     res = cur.execute('SELECT * FROM film WHERE difficulte = ? ORDER BY RANDOM() LIMIT 1', (difficulte,)).fetchone()
-#     movie = Film(res[2], res[1], res[3], res[4])
-#     return movie
+
 def get_random_film_by_difficulte(difficulte):
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
@@ -57,12 +51,40 @@ def create_new_joueur(nom):
     connection.commit()
 
 
-def update_score_joueur(id, score):
+def update_score_joueur(nom, score):
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
     cur = connection.cursor()
-    cur.execute('UPDATE joueur SET score = ? WHERE nom = ?', (score, id))
+    cur.execute('UPDATE joueur SET score = ? WHERE nom = ?', (score, nom))
     connection.commit()
+
+
+def joueur_present(nom): 
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('SELECT * FROM joueur WHERE nom = ?', (nom,))
+    row = cur.fetchone()
+    connection.close()
+    if row is not None:
+        return True
+    else:
+        return False
+
+    
+def get_score_joueur(nom):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('SELECT score FROM joueur WHERE nom = ?', (nom,))
+    row = cur.fetchone()
+    connection.close()
+    if row is not None:
+        score = row['score']
+        return score
+    else:
+        return None
+
 
 #------------------------------ CLASSES ------------------------------#
 
@@ -84,6 +106,7 @@ def update_score_joueur(id, score):
 
 #     def get_difficulte(self):
 #         return self.difficulte
+
 class Film:
     def __init__(self, id_film, image, nom, description, difficulte):
         self.id_film = id_film

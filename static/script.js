@@ -13,24 +13,34 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const displayEndLevel = document.getElementById("displayEndLevel");
     const displayTime = document.getElementById("time");
     const displayEndJoueur = document.getElementById("displayEndJoueur");
-
+    const displayUserScore =  document.getElementById("score");
+    const displayyEndUserScore =  document.getElementById("displayEndScore");
+    
     const ulHistorique = document.getElementById("ulHistorique");
 
     const afficheImg = document.getElementById("afficheImg");
 
     const form = document.getElementById("form");
     let tryInput = document.getElementById("try");
-    let reponse = "test"; 
+    let reponse = ""; 
+    let startGame; 
     
+    let timer = 30; 
     let userName; 
     let level; 
-    let timer = 600; 
-
+    let userScore = 0; 
+    let pointsAdd = 15;
 
     let filmId;
     let filmImage;
     let filmNom;
     let filmDifficulte;
+
+
+
+
+
+
 
 
     //formater chaine
@@ -42,54 +52,85 @@ window.addEventListener("DOMContentLoaded", (event) => {
         
 
 
-      
+
+        function sendGame(nom, score) {
+            fetch('/api/score', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ nom: nom, score: score })
+            })
+            .then(response => {
+              if (response.ok) {
+                console.log('Game saved');
+              } else {
+                console.error('Erreur lors de la save');
+              }
+            })
+            .catch(error => {
+              console.error('Erreur lors de la requête:', error);
+            });
+          }
+          
+
+
+    function endTimer(){
+          //enregistrer la game 
+          sendGame(userName, userScore); 
+
+          //afficher les resultats
+          displayEndLevel.innerHTML = level;  
+          displayEndJoueur.innerHTML = userName; 
+          displayyEndUserScore.innerHTML = userScore;  
+          endGame.style.display = "flex";
+    }
+    
+
     function chrono(){
         if(timer > 0){
             timer = timer - 1; 
             displayTime.innerHTML = timer.toFixed(0); 
         }
         else{
-            endGame.style.display = "flex";
-            displayEndLevel.innerHTML = level;  
-            displayEndJoueur.innerHTML = userName;  
+            endTimer(); 
+            clearInterval(startGame);
         }
         
     }
 
 
-function callFilm(){
-    //Formater les maj de level 
-    level = formaterChaine(level);
-    fetch(`/api/getfilm/${level}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-            // Gérer l'erreur 
-            console.error(data.error);
-            } 
-            else {
-            // Film retournées par l'API
-            filmId = data.id_film;
-            filmImage = data.Image;
-            filmNom = data.Nom;
-            filmDifficulte = data.Difficulte;
-            
-            console.log(`Film ID: ${filmId}`);
-            console.log(`Film Image: ${filmImage}`);
-            console.log(`Film Nom: ${filmNom}`);
-            console.log(`Film Difficulte: ${filmDifficulte}`);
+    function callFilm(){
+        //Formater les maj de level 
+        level = formaterChaine(level);
+        fetch(`/api/getfilm/${level}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                console.error(data.error);
+                } 
+                else {
+                // Film retournées par l'API
+                filmId = data.id_film;
+                filmImage = data.Image;
+                filmNom = data.Nom;
+                filmDifficulte = data.Difficulte;
+                
+                console.log(`Film ID: ${filmId}`);
+                console.log(`Film Image: ${filmImage}`);
+                console.log(`Film Nom: ${filmNom}`);
+                console.log(`Film Difficulte: ${filmDifficulte}`);
 
-            //Intégrer les infos 
-            afficheImg.src = filmImage; 
-            reponse = filmNom; 
+                //Intégrer les infos 
+                afficheImg.src = filmImage; 
+                reponse = filmNom; 
 
+        }
+            })
+            .catch(error => {
+                console.error("Une erreur s'est produite lors de la récupération du film :", error);
+            });
     }
-        })
-        .catch(error => {
-            // Gérer les erreurs de la requête
-            console.error("Une erreur s'est produite lors de la récupération du film :", error);
-        });
-}
 
 
     
@@ -105,6 +146,7 @@ function callFilm(){
        console.log('vérif : ')
        console.log(reponse); 
        console.log(essai); 
+
        if (essai !== reponse) {
            const newLi = document.createElement("li");
            newLi.textContent = tryInput.value;
@@ -112,8 +154,13 @@ function callFilm(){
            tryInput.value = ""; 
            return;
        }
+
        tryInput.value = "";
        //est-ce qu'on supprime l'historique des mauvaises réponses également ? 
+
+       userScore = userScore + pointsAdd; 
+       displayUserScore.innerHTML = userScore; 
+
        callFilm();
     
      });
@@ -122,17 +169,21 @@ function callFilm(){
     //display game & user info
     goBtn.addEventListener("click", function(){
         userName = document.getElementById("nickname").value;
-        level = document.getElementById("level").value;
-        corpus.style.display = "none";
-        game.style.display = "flex"; 
+        userName = userName.replace(/\s/g, '');//supprimer tout les espaces dans le nom
+        if (userName != ""){
+            level = document.getElementById("level").value;
+            corpus.style.display = "none";
+            game.style.display = "flex"; 
+    
+            displayUsername.innerHTML = userName; 
+            displayLevel.innerHTML = level; 
 
-        displayUsername.innerHTML = userName; 
-        displayLevel.innerHTML = level; 
-
-        callFilm();
-  
-        
-        setInterval(chrono, 1000)
+            callFilm();            
+            startGame = setInterval(chrono, 1000);
+        } else {
+            alert("Entrer un nom valide"); 
+        }
+     
         
     });
 
