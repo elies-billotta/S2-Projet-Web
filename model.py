@@ -86,6 +86,16 @@ def get_score_joueur(nom):
         return None
 
 
+def get_all_films():
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    res = cur.execute('SELECT * FROM film').fetchall()
+    films = []
+    for row in res:
+        films.append(Film(row[0], row[1], row[2], row[3], row[4]))
+    return films
+
 #------------------------------ CLASSES ------------------------------#
 
 # class Film : 
@@ -114,6 +124,9 @@ class Film:
         self.nom = nom
         self.description = description
         self.difficulte = difficulte
+
+    def get_id_film(self):
+        return self.id_film
 
     def get_nom(self):
         return self.nom
