@@ -74,3 +74,24 @@ def update():
     description = data['description']
     update_film(id_film, image, nom, description, difficulte)
     return redirect(url_for('adminview'))
+
+@app.route('/adminview/create')
+def create():
+    return render_template('create.html')
+    
+@app.route('/adminview/add', methods=['POST'])
+def add():
+    data = request.json
+    nom = data['nom']
+    image = data['image']
+    difficulte = data['difficulte']
+    description = data['description']
+    create_new_film(image, nom, description, difficulte)
+    return redirect(url_for('adminview'))
+
+@app.route('/adminview/delete', methods=['POST'])
+def delete():
+    data = request.json
+    id_film = data['id_film']
+    delete_film(id_film)
+    return redirect(url_for('adminview'))
