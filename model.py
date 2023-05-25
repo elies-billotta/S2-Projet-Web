@@ -54,6 +54,7 @@ def update_score_joueur(id, score):
     cur.execute('UPDATE joueur SET score = ? WHERE nom = ?', (score, id))
     connection.commit()
 
+
 #------------------------------ CLASSES ------------------------------#
 
 class Film : 
