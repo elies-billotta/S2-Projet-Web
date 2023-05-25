@@ -18,10 +18,9 @@
             </tr>
         </thead> 
         <tbody>
-            <!--BOUCLE TABLEAU TOP 10 SCORE-->
             {% for film in films %}
             <tr>
-                <td>{{film.get_id_film()}}</td>
+                <td><a href="adminview/edit/{{film.get_id_film()}}">{{film.get_id_film()}}</a></td>
                 <td>{{film.get_nom()}}</td>
                 <td>{{film.get_image()}}</td>
                 <td>{{film.get_description()}}</td>

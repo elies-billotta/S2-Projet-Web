@@ -55,15 +55,22 @@ def handle_score():
 def adminview():
     listeFilms = []
     films = get_all_films()
-    # for film in films:
-    #     #créér un dictionnaire dans lequel à chaque id_film on associe le film 
-    #     element = {
-    #         film.id_film: {
-    #             'Image': film.image,
-    #             'Nom': film.nom,
-    #             'Difficulte': film.difficulte
-    #         }
-    #     }
-    #     listeFilms.append(element)
-    # print(listeFilms)
     return render_template('adminview.html', films=films)
+
+
+@app.route('/adminview/edit/<string:id_film>')
+def edit(id_film):
+    film = get_film_by_id(id_film)
+    return render_template('update.html', film=film)
+
+
+@app.route('/adminview/update', methods=['POST'])
+def update():
+    data = request.json
+    id_film = data['id_film']
+    nom = data['nom']
+    image = data['image']
+    difficulte = data['difficulte']
+    description = data['description']
+    update_film(id_film, image, nom, description, difficulte)
+    return redirect(url_for('adminview'))

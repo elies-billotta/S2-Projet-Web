@@ -21,6 +21,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const afficheImg = document.getElementById("afficheImg");
 
     const form = document.getElementById("form");
+    const modifyForm = document.getElementById("modifyForm");
     let tryInput = document.getElementById("try");
     let reponse = ""; 
     let startGame; 
@@ -131,39 +132,37 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.error("Une erreur s'est produite lors de la récupération du film :", error);
             });
     }
-
-
+  
+     //Bonne réponse ? 
+     form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      let essai = formaterChaine(tryInput.value); 
+      reponse = formaterChaine(reponse);
+      console.log('vérif : ')
+      console.log(reponse); 
+      console.log(essai); 
+  
+      if (essai !== reponse) {
+          const newLi = document.createElement("li");
+          newLi.textContent = tryInput.value;
+          ulHistorique.insertBefore(newLi, ulHistorique.firstChild);
+          tryInput.value = ""; 
+          return;
+      }
+  
+      tryInput.value = "";
+      //est-ce qu'on supprime l'historique des mauvaises réponses également ? 
+  
+      userScore = userScore + pointsAdd; 
+      displayUserScore.innerHTML = userScore; 
+  
+      callFilm();
+   
+    });
     
 
 
 
-
-   //Bonne réponse ? 
-   form.addEventListener('submit', (event) => {
-       event.preventDefault();
-       let essai = formaterChaine(tryInput.value); 
-       reponse = formaterChaine(reponse);
-       console.log('vérif : ')
-       console.log(reponse); 
-       console.log(essai); 
-
-       if (essai !== reponse) {
-           const newLi = document.createElement("li");
-           newLi.textContent = tryInput.value;
-           ulHistorique.insertBefore(newLi, ulHistorique.firstChild);
-           tryInput.value = ""; 
-           return;
-       }
-
-       tryInput.value = "";
-       //est-ce qu'on supprime l'historique des mauvaises réponses également ? 
-
-       userScore = userScore + pointsAdd; 
-       displayUserScore.innerHTML = userScore; 
-
-       callFilm();
-    
-     });
 
 
     //display game & user info
@@ -186,20 +185,5 @@ window.addEventListener("DOMContentLoaded", (event) => {
      
         
     });
-
-    
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
 });
+

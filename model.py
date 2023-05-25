@@ -22,6 +22,17 @@ def get_random_film_by_difficulte(difficulte):
     else:
         return None
 
+def get_film_by_id(id_film):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    res = cur.execute('SELECT * FROM film WHERE id_film = ?', (id_film,)).fetchone()
+    if res:
+        movie = Film(res['id_film'], res['Image'], res['Nom'], res['Description'], res['Difficulte'])
+        return movie
+    else:
+        return None
+
 def get_difficulte():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
@@ -32,6 +43,14 @@ def get_difficulte():
     for row in res:
         difficulte.append(Difficulte(row[0]))
     return difficulte
+
+
+def update_film(id_film, image, nom, description, difficulte):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('UPDATE film SET image = ?, nom = ?, description = ?, difficulte = ? WHERE id_film = ?', (image, nom, description, difficulte, id_film))
+    connection.commit()
 
 def get_leaderboard(limite):
     connection = sqlite3.connect('database.db')
