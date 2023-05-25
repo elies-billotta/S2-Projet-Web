@@ -122,6 +122,13 @@ def create_new_film(image, nom, description, difficulte):
     cur.execute('INSERT INTO film (image, nom, description, difficulte) VALUES (?, ?, ?, ?)', (image, nom, description, difficulte))
     connection.commit()
 
+def delete_film(id_film):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    cur.execute('DELETE FROM film WHERE id_film = ?', (id_film,))
+    connection.commit()
+
 #------------------------------ CLASSES ------------------------------#
 
 # class Film : 
