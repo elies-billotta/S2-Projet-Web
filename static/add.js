@@ -1,18 +1,17 @@
 const addForm = document.getElementById('addForm');
+const nom = document.getElementById('nom').value;
+const difficulte = document.getElementById('difficulte').value;
+const image = document.getElementById('image').value;
+const description = document.getElementById('description').value;
 
 addForm.addEventListener('submit', (event)=>{
     event.preventDefault();
-    const nom = document.getElementById('nom').value;
-    const difficulte = document.getElementById('difficulte').value;
-    const image = document.getElementById('image').value;
-    const description = document.getElementById('description').value;
     const data = {
         nom: nom,
         description: description,
         difficulte: difficulte,
         image: image
     };
-    console.log(data);
     fetch('/adminview/add', {
         method: 'POST',
         headers: {
@@ -22,7 +21,7 @@ addForm.addEventListener('submit', (event)=>{
     }).then((response)=>{
         if(response.status === 200){
             alert('Film ajouté avec succès');
-            //window.location.href = '/adminview';
+            window.location.href = '/adminview';
         }else{
             alert('Erreur lors de l\'ajout du film');
             console.log(response);

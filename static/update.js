@@ -16,7 +16,6 @@ modifyForm.addEventListener('submit', (event)=>{
         difficulte: difficulte,
         image: image
     };
-    console.log(data);
     fetch('/adminview/update', {
         method: 'POST',
         headers: {
@@ -26,7 +25,7 @@ modifyForm.addEventListener('submit', (event)=>{
     }).then((response)=>{
         if(response.status === 200){
             alert('Film modifié avec succès');
-            //window.location.href = '/adminview';
+            window.location.href = '/adminview';
         }else{
             alert('Erreur lors de la modification du film');
             console.log(response);
@@ -42,7 +41,6 @@ deleteForm.addEventListener('submit', (event)=>{
     const data = {
         id_film : id
     };
-    console.log(data);
     fetch('/adminview/delete', {
         method: 'POST',
         headers: {
@@ -52,7 +50,7 @@ deleteForm.addEventListener('submit', (event)=>{
     }).then((response)=>{
         if(response.status === 200){
             alert('Film supprimé avec succès');
-            //window.location.href = '/adminview';
+            window.location.href = '/adminview';
         }else{
             alert('Erreur lors de la suppression du film');
             console.log(response);
