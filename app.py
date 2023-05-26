@@ -32,7 +32,6 @@ def getFilm(level):
             'Description': film.description
         }
         liste.append(film.id_film)
-        print(liste)
         return jsonify(film_dict)
     else:
         return jsonify({'error': 'No film found for the given difficulty level.'}), 404
@@ -54,12 +53,26 @@ def handle_score():
 
 @app.route('/adminview')
 def adminview():
-    listeFilms = []
     films = get_all_films()
     nbFilmsFacile = get_nb_films_by_difficulte('facile')
     nbFilmsNormale = get_nb_films_by_difficulte('normale')
     nbFilmsDifficile = get_nb_films_by_difficulte('difficile')
-    return render_template('adminview.html', films=films, nbFilmsFacile=nbFilmsFacile, nbFilmsNormale=nbFilmsNormale, nbFilmsDifficile=nbFilmsDifficile)
+    return render_template('adminview.html', films=films, nbFilmsFacile=nbFilmsFacile, nbFilmsNormale=nbFilmsNormale, nbFilmsDifficile=nbFilmsDifficile, levels=get_difficulte())
+
+@app.route('/api/get_all_film')
+def films():
+    liste_film = []
+    films = get_all_films()
+    for film in films:
+        film_dict = {
+            'id_film': film.id_film,
+            'Image': film.image,
+            'Nom': film.nom,
+            'Difficulte': film.difficulte,
+            'Description': film.description
+        }
+        liste_film.append(film_dict)
+    return jsonify(liste_film)
 
 
 @app.route('/adminview/edit/<string:id_film>')
