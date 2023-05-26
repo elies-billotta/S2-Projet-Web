@@ -56,7 +56,10 @@ def handle_score():
 def adminview():
     listeFilms = []
     films = get_all_films()
-    return render_template('adminview.html', films=films)
+    nbFilmsFacile = get_nb_films_by_difficulte('facile')
+    nbFilmsNormale = get_nb_films_by_difficulte('normale')
+    nbFilmsDifficile = get_nb_films_by_difficulte('difficile')
+    return render_template('adminview.html', films=films, nbFilmsFacile=nbFilmsFacile, nbFilmsNormale=nbFilmsNormale, nbFilmsDifficile=nbFilmsDifficile)
 
 
 @app.route('/adminview/edit/<string:id_film>')

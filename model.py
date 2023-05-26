@@ -129,6 +129,13 @@ def delete_film(id_film):
     cur.execute('DELETE FROM film WHERE id_film = ?', (id_film,))
     connection.commit()
 
+def get_nb_films_by_difficulte(difficulte):
+    connection = sqlite3.connect('database.db')
+    connection.row_factory = sqlite3.Row
+    cur = connection.cursor()
+    res = cur.execute('SELECT COUNT(*) FROM film WHERE difficulte = ?', (difficulte,)).fetchone()
+    return res[0]
+
 #------------------------------ CLASSES ------------------------------#
 
 # class Film : 
