@@ -28,7 +28,8 @@ def getFilm(level):
             'id_film': film.id_film,
             'Image': film.image,
             'Nom': film.nom,
-            'Difficulte': film.difficulte
+            'Difficulte': film.difficulte,
+            'Description': film.description
         }
         liste.append(film.id_film)
         print(liste)

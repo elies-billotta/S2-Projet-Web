@@ -15,6 +15,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const displayEndJoueur = document.getElementById("displayEndJoueur");
     const displayUserScore =  document.getElementById("score");
     const displayyEndUserScore =  document.getElementById("displayEndScore");
+    const displayDescription = document.getElementById("displayDescription");
     
     const ulHistorique = document.getElementById("ulHistorique");
 
@@ -36,6 +37,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let filmImage;
     let filmNom;
     let filmDifficulte;
+    let filmDescription;
 
 
 
@@ -84,6 +86,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
           displayEndLevel.innerHTML = level;  
           displayEndJoueur.innerHTML = userName; 
           displayyEndUserScore.innerHTML = userScore;  
+          displayDescription.innerHTML = filmDescription;
           endGame.style.display = "flex";
     }
     
@@ -116,11 +119,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 filmImage = data.Image;
                 filmNom = data.Nom;
                 filmDifficulte = data.Difficulte;
-                
+                filmDescription = data.Description;
+                console.log(data);
                 console.log(`Film ID: ${filmId}`);
                 console.log(`Film Image: ${filmImage}`);
                 console.log(`Film Nom: ${filmNom}`);
                 console.log(`Film Difficulte: ${filmDifficulte}`);
+                console.log(`Film Description: ${filmDescription}`);
 
                 //Intégrer les infos 
                 afficheImg.src = filmImage; 
@@ -154,6 +159,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
       //est-ce qu'on supprime l'historique des mauvaises réponses également ? 
   
       userScore = userScore + pointsAdd; 
+      if (level === "normale") timer += 3;
+      else if (level === "difficile") timer += 5;
+      if (timer > 30){
+          timer = 30; 
+      }
       displayUserScore.innerHTML = userScore; 
   
       callFilm();

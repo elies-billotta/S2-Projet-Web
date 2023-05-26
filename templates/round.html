@@ -82,7 +82,6 @@
         <div class="display">
             <!--IMAGE-->
             <img src="{{film.get_image()}}" alt="{{film.get_description()}}">
-            {% endblock %}
         </div>
         <div class="inputs">
             <form id="form" action="">
@@ -104,6 +103,8 @@
 </section>
 <section class="endGame" id="endGame">
     <div>
+        <h1>FIN DE LA PARTIE</h1>
+        <p class="endInfo" id="displayEndPseudo">{{film.get_description()}}</p>
         <p class="endInfo" id="displayEndJoueur"></p> 
         <p class="endInfo" id="displayEndScore">2000</p> 
         <p class="endInfo" id="displayEndLevel"></p>
@@ -113,6 +114,7 @@
         </div>
 
     </div>
+    {% endblock %}
 </section>
 </body>
 </html>
