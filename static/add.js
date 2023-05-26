@@ -1,11 +1,11 @@
 const addForm = document.getElementById('addForm');
-const nom = document.getElementById('nom').value;
-const difficulte = document.getElementById('difficulte').value;
-const image = document.getElementById('image').value;
-const description = document.getElementById('description').value;
 
 addForm.addEventListener('submit', (event)=>{
     event.preventDefault();
+    const nom = document.getElementById('nom').value;
+    const difficulte = document.getElementById('difficulte').value;
+    const image = document.getElementById('image').value;
+    const description = document.getElementById('description').value;
     const data = {
         nom: nom,
         description: description,

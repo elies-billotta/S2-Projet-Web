@@ -82,6 +82,7 @@ def create():
 @app.route('/adminview/add', methods=['POST'])
 def add():
     data = request.json
+    print(data)
     nom = data['nom']
     image = data['image']
     difficulte = data['difficulte']
