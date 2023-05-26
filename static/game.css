@@ -239,7 +239,6 @@ table {
 .endGame div{
     background-color: var(--primary-color);
     width: 320px;
-    height: 170px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -247,6 +246,18 @@ table {
     flex-direction: column;
     padding: 10px;
 }
+
+
+
+.endGame > div > h2{
+    margin-bottom: 30px;
+}
+.endGame > div > p {
+    font-size: var(--font-sizep);
+    font-family: 'Manrope-Regular';
+    margin-bottom: 20px;
+}
+
 .endInfo{
      font-size: var(--font-sizep); 
      font-family: "Manrope-Bold";  
