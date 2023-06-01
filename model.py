@@ -20,7 +20,7 @@ def get_random_film_by_difficulte(difficulte):
         movie = Film(res['id_film'], res['Image'], res['Nom'], res['Description'], res['Difficulte'])
         return movie
     else:
-        return None
+        return None 
 
 def get_film_by_id(id_film):
     connection = sqlite3.connect('database.db')
@@ -138,26 +138,7 @@ def get_nb_films_by_difficulte(difficulte):
 
 #------------------------------ CLASSES ------------------------------#
 
-# class Film : 
-#     def __init__(self, nom,  image, description, difficulte):
-#         self.nom = nom
-#         self.image = image
-#         self.description = description
-#         self.difficulte = difficulte
-
-#     def get_nom(self):
-#         return self.nom
-
-#     def get_image(self):
-#         return self.image
-
-#     def get_description(self):
-#         return self.description
-
-#     def get_difficulte(self):
-#         return self.difficulte
-
-class Film:
+class Film: 
     def __init__(self, id_film, image, nom, description, difficulte):
         self.id_film = id_film
         self.image = image
